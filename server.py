@@ -9,11 +9,8 @@ def greeting():
 @app.route('/calculator/add', methods=['POST'])
 def add_numbers():
     data = request.get_json()
-    first_number = data.get('first')
-    second_number = data.get('second')
-    
-    if first_number is None or second_number is None:
-        return jsonify({'error': 'Both numbers are required'}), 400
+    first_number = data['first']
+    second_number = data['second']
     
     result = first_number + second_number
     return jsonify({'result': result}), 200
@@ -21,11 +18,8 @@ def add_numbers():
 @app.route('/calculator/subtract', methods=['POST'])
 def subtract_numbers():
     data = request.get_json()
-    first_number = data.get('first')
-    second_number = data.get('second')
-    
-    if first_number is None or second_number is None:
-        return jsonify({'error': 'Both numbers are required'}), 400
+    first_number = data['first']
+    second_number = data['second']
     
     result = first_number - second_number
     return jsonify({'result': result}), 200
