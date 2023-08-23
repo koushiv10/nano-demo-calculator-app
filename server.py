@@ -8,31 +8,33 @@ def greeting():
 
 @app.route('/calculator/add', methods=['POST'])
 def add_numbers():
+    data = request.get_json()
+    if not data or 'first' not in data or 'second' not in data:
+        return jsonify({'error': 'Both first and second numbers are required'}), 400
+    
     try:
-        data = request.json
-        first_number = data['first']
-        second_number = data['second']
-        
-        result = first_number + second_number
-        return jsonify({'result': result}), 200
-    except KeyError:
-        return jsonify({'error': 'Both "first" and "second" numbers are required'}), 400
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        first_number = float(data['first'])
+        second_number = float(data['second'])
+    except ValueError:
+        return jsonify({'error': 'Invalid numbers provided'}), 400
+    
+    result = first_number + second_number
+    return jsonify({'result': result}), 200
 
 @app.route('/calculator/subtract', methods=['POST'])
 def subtract_numbers():
+    data = request.get_json()
+    if not data or 'first' not in data or 'second' not in data:
+        return jsonify({'error': 'Both first and second numbers are required'}), 400
+    
     try:
-        data = request.json
-        first_number = data['first']
-        second_number = data['second']
-        
-        result = first_number - second_number
-        return jsonify({'result': result}), 200
-    except KeyError:
-        return jsonify({'error': 'Both "first" and "second" numbers are required'}), 400
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        first_number = float(data['first'])
+        second_number = float(data['second'])
+    except ValueError:
+        return jsonify({'error': 'Invalid numbers provided'}), 400
+    
+    result = first_number - second_number
+    return jsonify({'result': result}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
